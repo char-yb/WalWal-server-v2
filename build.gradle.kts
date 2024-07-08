@@ -30,6 +30,9 @@ dependencies {
 	// Coroutines dependencies
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
 
+	// Actuator
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+
 	// DB
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("com.mysql:mysql-connector-j")
