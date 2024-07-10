@@ -1,0 +1,15 @@
+#!/bin/sh
+
+targetFiles=$(git diff --staged --name-only)
+
+echo "Apply Ktlint.."
+./gradlew ktlintMainSourceSetFormat
+./gradlew ktlintTestSourceSetFormat
+./gradlew ktlintKotlinScriptFormat
+
+# Add files to stage spotless applied
+for file in $targetFiles; do
+  if test -f "$file"; then
+    git add $file
+  fi
+done

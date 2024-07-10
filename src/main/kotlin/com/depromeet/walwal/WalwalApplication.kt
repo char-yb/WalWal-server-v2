@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class WalwalApplication
 
 fun main(args: Array<String>) {
-	runApplication<WalwalApplication>(*args)
+    runApplication<WalwalApplication>(*args)
 }
