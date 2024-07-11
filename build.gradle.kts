@@ -41,6 +41,10 @@ dependencies {
     // redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
+    // kotlin-jdsl
+    implementation("com.linecorp.kotlin-jdsl:jpql-dsl:3.5.1")
+    implementation("com.linecorp.kotlin-jdsl:jpql-render:3.5.1")
+
     // fixture monkey dependencies
     testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.20")
 
