@@ -45,6 +45,11 @@ dependencies {
     implementation("com.linecorp.kotlin-jdsl:jpql-dsl:3.5.1")
     implementation("com.linecorp.kotlin-jdsl:jpql-render:3.5.1")
 
+    // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.security:spring-security-test")
+    implementation("org.springframework.security:spring-security-oauth2-client")
+
     // fixture monkey dependencies
     testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.20")
 
