@@ -8,7 +8,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.security.config.Customizer.*
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -38,9 +37,8 @@ class WebSecurityConfig {
     @Order(1)
     @Throws(Exception::class)
     fun swaggerFilterChain(http: HttpSecurity): SecurityFilterChain {
-        defaultFilterChain(http)
+        apiSecurityFilterChain(http)
 
-//        http.securityMatcher(SwaggerUrlConstants.getSwaggerUrls()).httpBasic(withDefaults())
         http.securityMatcher(SwaggerUrlConstants.getSwaggerUrls().toString()).httpBasic(withDefaults())
 
         http.authorizeHttpRequests { authorize -> authorize.anyRequest().permitAll() }
@@ -54,11 +52,14 @@ class WebSecurityConfig {
     }
 
     @Throws(Exception::class)
-    private fun defaultFilterChain(http: HttpSecurity) {
-        http.httpBasic(AbstractHttpConfigurer::disable)
-            .formLogin(AbstractHttpConfigurer::disable)
+    private fun apiSecurityFilterChain(http: HttpSecurity) {
+        http
+            .httpBasic { httpBasicConfigurer -> httpBasicConfigurer.disable() }
+            .formLogin { formLoginConfigurer -> formLoginConfigurer.disable() }
             .cors(withDefaults())
-            .sessionManagement { session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+            .sessionManagement { sessionManagementConfigurer ->
+                sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            }
     }
 
     @Bean
