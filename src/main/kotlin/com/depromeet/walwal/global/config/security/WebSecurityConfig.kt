@@ -64,7 +64,7 @@ class WebSecurityConfig {
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration: CorsConfiguration = CorsConfiguration()
+        val configuration = CorsConfiguration()
         // TODO: CORS 임시 전체 허용
         configuration.addAllowedOriginPattern("*")
 
