@@ -19,62 +19,62 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableWebSecurity
 class WebSecurityConfig {
-    @Bean
-    @Throws(Exception::class)
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http.authorizeHttpRequests { authorize ->
-            authorize
-                .requestMatchers("/walwal-actuator/**")
-                .permitAll() // 액추에이터
-                .anyRequest()
-                .authenticated()
-        }
+	@Bean
+	@Throws(Exception::class)
+	fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+		http.authorizeHttpRequests { authorize ->
+			authorize
+				.requestMatchers("/walwal-actuator/**")
+				.permitAll() // 액추에이터
+				.anyRequest()
+				.authenticated()
+		}
 
-        return http.build()
-    }
+		return http.build()
+	}
 
-    @Bean
-    @Order(1)
-    @Throws(Exception::class)
-    fun swaggerFilterChain(http: HttpSecurity): SecurityFilterChain {
-        apiSecurityFilterChain(http)
+	@Bean
+	@Order(1)
+	@Throws(Exception::class)
+	fun swaggerFilterChain(http: HttpSecurity): SecurityFilterChain {
+		apiSecurityFilterChain(http)
 
-        http.securityMatcher(SwaggerUrlConstants.getSwaggerUrls().toString()).httpBasic(withDefaults())
+		http.securityMatcher(SwaggerUrlConstants.getSwaggerUrls().toString()).httpBasic(withDefaults())
 
-        http.authorizeHttpRequests { authorize -> authorize.anyRequest().permitAll() }
+		http.authorizeHttpRequests { authorize -> authorize.anyRequest().permitAll() }
 
-        return http.build()
-    }
+		return http.build()
+	}
 
-    @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
-    }
+	@Bean
+	fun passwordEncoder(): PasswordEncoder {
+		return BCryptPasswordEncoder()
+	}
 
-    @Throws(Exception::class)
-    private fun apiSecurityFilterChain(http: HttpSecurity) {
-        http
-            .httpBasic { httpBasicConfigurer -> httpBasicConfigurer.disable() }
-            .formLogin { formLoginConfigurer -> formLoginConfigurer.disable() }
-            .cors(withDefaults())
-            .sessionManagement { sessionManagementConfigurer ->
-                sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            }
-    }
+	@Throws(Exception::class)
+	private fun apiSecurityFilterChain(http: HttpSecurity) {
+		http
+			.httpBasic { httpBasicConfigurer -> httpBasicConfigurer.disable() }
+			.formLogin { formLoginConfigurer -> formLoginConfigurer.disable() }
+			.cors(withDefaults())
+			.sessionManagement { sessionManagementConfigurer ->
+				sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			}
+	}
 
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-        // TODO: CORS 임시 전체 허용
-        configuration.addAllowedOriginPattern("*")
+	@Bean
+	fun corsConfigurationSource(): CorsConfigurationSource {
+		val configuration = CorsConfiguration()
+		// TODO: CORS 임시 전체 허용
+		configuration.addAllowedOriginPattern("*")
 
-        configuration.addAllowedHeader("*")
-        configuration.addAllowedMethod("*")
-        configuration.allowCredentials = true
-        configuration.addExposedHeader(HttpHeaders.SET_COOKIE)
+		configuration.addAllowedHeader("*")
+		configuration.addAllowedMethod("*")
+		configuration.allowCredentials = true
+		configuration.addExposedHeader(HttpHeaders.SET_COOKIE)
 
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
-    }
+		val source = UrlBasedCorsConfigurationSource()
+		source.registerCorsConfiguration("/**", configuration)
+		return source
+	}
 }

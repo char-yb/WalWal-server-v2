@@ -5,21 +5,21 @@ import jakarta.persistence.Embeddable
 
 @Embeddable
 class Profile(
-    @field:Schema(
-        description = "닉네임",
-        example = "왈왈멍",
-    ) private val nickname: String,
-    @field:Schema(
-        description = "프로필 이미지 URL",
-        example = "./profile.jpg",
-    ) private val profileImageUrl: String,
+	@field:Schema(
+		description = "닉네임",
+		example = "왈왈멍",
+	) private val nickname: String,
+	@field:Schema(
+		description = "프로필 이미지 URL",
+		example = "./profile.jpg",
+	) private val profileImageUrl: String,
 ) {
-    companion object {
-        fun createProfile(
-            nickname: String,
-            profileImageUrl: String,
-        ): Profile {
-            return Profile(nickname, profileImageUrl)
-        }
-    }
+	companion object {
+		fun createProfile(
+			nickname: String,
+			profileImageUrl: String,
+		): Profile {
+			return Profile(nickname, profileImageUrl)
+		}
+	}
 }

@@ -8,14 +8,14 @@ import java.time.Duration
 
 @Configuration
 class RestClientConfig {
-    @Bean
-    fun restClient(): RestClient {
-        val restTemplate =
-            RestTemplateBuilder()
-                .setConnectTimeout(Duration.ofSeconds(10))
-                .setReadTimeout(Duration.ofSeconds(5))
-                .build()
+	@Bean
+	fun restClient(): RestClient {
+		val restTemplate =
+			RestTemplateBuilder()
+				.setConnectTimeout(Duration.ofSeconds(10))
+				.setReadTimeout(Duration.ofSeconds(5))
+				.build()
 
-        return RestClient.create(restTemplate)
-    }
+		return RestClient.create(restTemplate)
+	}
 }

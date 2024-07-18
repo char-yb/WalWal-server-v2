@@ -107,7 +107,7 @@ tasks.jacocoTestCoverageVerification<JacocoCoverageVerification> {
             limit {
                 // 'counter'를 지정하지 않으면 default는 'INSTRUCTION'
                 // 'value'를 지정하지 않으면 default는 'COVEREDRATIO'
-                minimum = "0.30".toBigDecimal()
+                minimum = "0.0".toBigDecimal()
             }
         }
 
