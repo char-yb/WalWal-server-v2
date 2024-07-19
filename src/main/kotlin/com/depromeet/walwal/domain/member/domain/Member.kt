@@ -1,6 +1,7 @@
 package com.depromeet.walwal.domain.member.domain
 
 import com.depromeet.walwal.domain.common.BaseTimeEntity
+import com.depromeet.walwal.domain.missionRecord.domain.MissionRecord
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -25,4 +26,7 @@ class Member : BaseTimeEntity() {
 	private val role: MemberRole? = null
 
 	private val lastLoginAt: LocalDateTime? = null
+
+	@OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
+	private val missionRecords: List<MissionRecord>? = listOf()
 }
