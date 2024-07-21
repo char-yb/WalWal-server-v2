@@ -9,8 +9,10 @@ spring:
       - redis
       - actuator
       - docs
+      - cloud
+      - security
   application:
-    name: walwal
+    name: stonebed
 
 logging:
   level:
