@@ -41,3 +41,9 @@ out/
 
 ### Fixture Monkey ###
 .jqwik-database
+
+### Custom ###
+*.env
+*.DS_Store
+/src/main/generated
+.*-database
