@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size
 
 @Entity
 class Mission(
-	@field:Column(
+	@Column(
 		name = "title",
 		nullable = false,
 		length = 100,

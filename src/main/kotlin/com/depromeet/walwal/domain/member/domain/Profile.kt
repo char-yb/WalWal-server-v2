@@ -5,11 +5,11 @@ import jakarta.persistence.Embeddable
 
 @Embeddable
 class Profile(
-	@field:Schema(
+	@Schema(
 		description = "닉네임",
 		example = "왈왈멍",
 	) private val nickname: String,
-	@field:Schema(
+	@Schema(
 		description = "프로필 이미지 URL",
 		example = "./profile.jpg",
 	) private val profileImageUrl: String,
