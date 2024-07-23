@@ -5,22 +5,22 @@ import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
+@Table(name = "mission")
 @Entity
 class Mission(
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "mission_id")
+	var id: Long,
 	@Column(
 		name = "title",
 		nullable = false,
 		length = 100,
-	) var title:
-		@Size(max = 100)
-		@NotBlank
-		String?,
+	)
+	@Size(max = 100)
+	@NotBlank
+	var title: String?,
 ) : BaseTimeEntity() {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "mission_id")
-	var id: Long? = null
-
 	fun updateTitle(title: String?) {
 		this.title = title
 	}

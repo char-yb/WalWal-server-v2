@@ -7,26 +7,20 @@ import java.time.LocalDateTime
 
 @Table(name = "member")
 @Entity
-class Member : BaseTimeEntity() {
+class Member private constructor(
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
-	var id: Long? = null
-
+	var id: Long,
 	@Embedded
-	val profile = Profile.createProfile("", "")
-
+	val profile: Profile = Profile.createProfile("", ""),
 	@Embedded
-	val oauthInfo: OauthInfo? = null
-
+	val oauthInfo: OauthInfo?,
 	@Enumerated(EnumType.STRING)
-	val status: MemberStatus? = null
-
+	val status: MemberStatus?,
 	@Enumerated(EnumType.STRING)
-	val role: MemberRole? = null
-
-	val lastLoginAt: LocalDateTime? = null
-
+	val role: MemberRole?,
+	val lastLoginAt: LocalDateTime?,
 	@OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
-	val missionRecords: List<MissionRecord> = listOf()
-}
+	val missionRecords: List<MissionRecord> = listOf(),
+) : BaseTimeEntity()
