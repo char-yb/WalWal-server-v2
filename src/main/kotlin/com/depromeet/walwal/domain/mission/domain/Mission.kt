@@ -11,7 +11,7 @@ class Mission(
 		name = "title",
 		nullable = false,
 		length = 100,
-	) private var title:
+	) var title:
 		@Size(max = 100)
 		@NotBlank
 		String?,
@@ -19,7 +19,7 @@ class Mission(
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "mission_id")
-	private var id: Long? = null
+	var id: Long? = null
 
 	fun updateTitle(title: String?) {
 		this.title = title

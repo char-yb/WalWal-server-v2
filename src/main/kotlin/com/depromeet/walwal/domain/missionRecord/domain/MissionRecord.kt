@@ -6,26 +6,21 @@ import com.depromeet.walwal.domain.mission.domain.Mission
 import jakarta.persistence.*
 
 @Entity
-class MissionRecord(
-	member: Member,
-	mission: Mission,
+class MissionRecord private constructor(
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "record_id")
+	var id: Long,
+	@ManyToOne
+	@JoinColumn(name = "mission_id", nullable = false)
+	val mission: Mission,
+	@ManyToOne
+	@JoinColumn(name = "member_id", nullable = false)
+	val member: Member,
 	@Column(name = "image_url") private var imageUrl: String,
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false) private var status: MissionStatus,
 ) : BaseTimeEntity() {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "record_id")
-	private var id: Long? = null
-
-	@ManyToOne
-	@JoinColumn(name = "mission_id", nullable = false)
-	private val mission: Mission = mission
-
-	@ManyToOne
-	@JoinColumn(name = "member_id", nullable = false)
-	private val member: Member = member
-
 	fun updateImageUrl(imageUrl: String) {
 		this.imageUrl = imageUrl
 	}
