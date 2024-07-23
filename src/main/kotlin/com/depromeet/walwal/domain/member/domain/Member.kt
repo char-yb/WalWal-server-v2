@@ -11,22 +11,22 @@ class Member : BaseTimeEntity() {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
-	private var id: Long? = null
+	var id: Long? = null
 
 	@Embedded
-	private val profile = Profile.createProfile("", "")
+	val profile = Profile.createProfile("", "")
 
 	@Embedded
-	private val oauthInfo: OauthInfo? = null
+	val oauthInfo: OauthInfo? = null
 
 	@Enumerated(EnumType.STRING)
-	private val status: MemberStatus? = null
+	val status: MemberStatus? = null
 
 	@Enumerated(EnumType.STRING)
-	private val role: MemberRole? = null
+	val role: MemberRole? = null
 
-	private val lastLoginAt: LocalDateTime? = null
+	val lastLoginAt: LocalDateTime? = null
 
 	@OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
-	private val missionRecords: List<MissionRecord>? = listOf()
+	val missionRecords: List<MissionRecord> = listOf()
 }
