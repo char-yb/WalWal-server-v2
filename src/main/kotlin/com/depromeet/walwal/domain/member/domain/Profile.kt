@@ -8,11 +8,11 @@ class Profile(
 	@Schema(
 		description = "닉네임",
 		example = "왈왈멍",
-	) private val nickname: String,
+	) val nickname: String,
 	@Schema(
 		description = "프로필 이미지 URL",
 		example = "./profile.jpg",
-	) private val profileImageUrl: String,
+	) val profileImageUrl: String,
 ) {
 	companion object {
 		fun createProfile(

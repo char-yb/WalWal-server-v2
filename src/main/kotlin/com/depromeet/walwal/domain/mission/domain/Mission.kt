@@ -11,7 +11,7 @@ class Mission(
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "mission_id")
-	var id: Long,
+	var id: Long = 0,
 	@Column(
 		name = "title",
 		nullable = false,
@@ -19,9 +19,19 @@ class Mission(
 	)
 	@Size(max = 100)
 	@NotBlank
-	var title: String?,
+	var title: String,
 ) : BaseTimeEntity() {
-	fun updateTitle(title: String?) {
+	companion object {
+		fun createMission(title: String): Mission {
+			with(Mission) {
+				return Mission(
+					title = title,
+				)
+			}
+		}
+	}
+
+	fun updateTitle(title: String) {
 		this.title = title
 	}
 }

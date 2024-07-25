@@ -7,11 +7,13 @@ data class MissionCreateRequest(
 	@Schema(
 		description = "미션 ID",
 		example = "1",
-	) val id: @NotBlank Long?,
+	)
+	@NotBlank
+	val id: Long,
 	@Schema(
 		description = "미션 제목",
 		example = "산책하기",
-	) val title:
-		@NotBlank(message = "Title cannot be blank")
-		String?,
+	)
+	@NotBlank(message = "미션 제목은 필수입니다.")
+	val title: String,
 )

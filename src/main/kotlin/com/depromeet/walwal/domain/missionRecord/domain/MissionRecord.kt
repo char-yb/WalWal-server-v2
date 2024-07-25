@@ -10,17 +10,35 @@ class MissionRecord private constructor(
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "record_id")
-	var id: Long,
+	var id: Long = 0,
+	@Column(name = "image_url") var imageUrl: String = "",
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status", nullable = false) var status: MissionStatus,
 	@ManyToOne
 	@JoinColumn(name = "mission_id", nullable = false)
 	val mission: Mission,
 	@ManyToOne
 	@JoinColumn(name = "member_id", nullable = false)
 	val member: Member,
-	@Column(name = "image_url") private var imageUrl: String,
-	@Enumerated(EnumType.STRING)
-	@Column(name = "status", nullable = false) private var status: MissionStatus,
 ) : BaseTimeEntity() {
+	companion object {
+		fun createMissionRecord(
+			imageUrl: String,
+			status: MissionStatus,
+			mission: Mission,
+			member: Member,
+		): MissionRecord {
+			with(MissionRecord) {
+				return MissionRecord(
+					imageUrl = imageUrl,
+					status = status,
+					mission = mission,
+					member = member,
+				)
+			}
+		}
+	}
+
 	fun updateImageUrl(imageUrl: String) {
 		this.imageUrl = imageUrl
 	}
