@@ -1,11 +1,18 @@
 package com.depromeet.walwal.domain.auth.dto.response
 
-data class AppleTokenResponse( // 외부 통신 시 snake_case로 요청 및 응답
-	val access_token: String,
-	val expires_in: Long,
-	val id_token: String,
-	val refresh_token: String,
-	val token_type: String,
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class AppleTokenResponse(
+	@JsonProperty("access_token")
+	val accessToken: String,
+	@JsonProperty("expires_in")
+	val expiresIn: Long,
+	@JsonProperty("id_token")
+	val idToken: String,
+	@JsonProperty("refresh_token")
+	val refreshToken: String,
+	@JsonProperty("token_type")
+	val tokenType: String,
 ) {
 	companion object {
 		fun of(

@@ -21,7 +21,6 @@ import java.util.*
 class JwtUtil(
 	private val jwtProperties: JwtProperties,
 ) {
-
 	fun generateAccessToken(
 		memberId: Long,
 		memberRole: MemberRole,
