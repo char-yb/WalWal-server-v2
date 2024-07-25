@@ -11,7 +11,6 @@ class MemberUtil(
 	private val securityUtil: SecurityUtil,
 	private val memberRepository: MemberRepository,
 ) {
-
 	val currentMember: Member
 		get() =
 			memberRepository
