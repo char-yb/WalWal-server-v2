@@ -8,4 +8,5 @@ object SecurityConstants {
 	const val APPLE_TOKEN_URL: String = "https://appleid.apple.com/auth/token"
 	const val ACCESS_TOKEN_COOKIE_NAME: String = "accessToken"
 	const val REFRESH_TOKEN_COOKIE_NAME: String = "refreshToken"
+	const val APPLICATION_URLENCODED: String = "application/x-www-form-urlencoded"
 }

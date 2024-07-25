@@ -18,6 +18,8 @@ end_of_line = crlf
 # [no-wildcard-imports]
 ktlint_no-wildcard-imports = disabled
 ktlint_standard_no-wildcard-imports = disabled
+ktlint_standard_value-argument-comment = disabled
+ktlint_standard_value-parameter-comment = disabled
 # [indentation-tab]
 indent_style = tab
 
