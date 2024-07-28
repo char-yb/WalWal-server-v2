@@ -35,7 +35,7 @@ class MissionRecordService(
 
 		val createRecord = missionRecordRepository.save(missionRecord)
 		return MissionRecordCreateResponse.from(
-			createRecord.id,
+			createRecord.id!!,
 			createRecord.mission.title,
 		)
 	}

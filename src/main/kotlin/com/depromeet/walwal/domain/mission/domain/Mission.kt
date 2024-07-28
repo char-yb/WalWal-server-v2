@@ -1,6 +1,6 @@
 package com.depromeet.walwal.domain.mission.domain
 
-import com.depromeet.walwal.domain.common.BaseTimeEntity
+import com.depromeet.walwal.domain.common.BaseEntity
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
@@ -8,10 +8,6 @@ import jakarta.validation.constraints.Size
 @Table(name = "mission")
 @Entity
 class Mission(
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "mission_id")
-	var id: Long = 0,
 	@Column(
 		name = "title",
 		nullable = false,
@@ -20,7 +16,7 @@ class Mission(
 	@Size(max = 100)
 	@NotBlank
 	var title: String,
-) : BaseTimeEntity() {
+) : BaseEntity() {
 	companion object {
 		fun createMission(title: String): Mission {
 			with(Mission) {

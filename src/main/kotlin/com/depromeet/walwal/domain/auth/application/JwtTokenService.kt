@@ -28,8 +28,9 @@ class JwtTokenService(
 	}
 
 	fun generateTemporaryTokenPair(temporaryMember: Member): TokenPairResponse {
-		val accessToken = createAccessToken(temporaryMember.id, MemberRole.TEMPORARY)
-		val refreshToken = createRefreshToken(temporaryMember.id)
+		val memberId = temporaryMember.id!!
+		val accessToken = createAccessToken(memberId, MemberRole.TEMPORARY)
+		val refreshToken = createRefreshToken(memberId)
 		return TokenPairResponse.of(accessToken, refreshToken)
 	}
 

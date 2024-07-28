@@ -1,7 +1,7 @@
 package com.depromeet.walwal.domain.member.domain
 
 import com.depromeet.walwal.domain.auth.domain.OAuthProvider
-import com.depromeet.walwal.domain.common.BaseTimeEntity
+import com.depromeet.walwal.domain.common.BaseEntity
 import com.depromeet.walwal.domain.missionRecord.domain.MissionRecord
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -9,10 +9,6 @@ import java.time.LocalDateTime
 @Table(name = "member")
 @Entity
 class Member private constructor(
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "member_id")
-	var id: Long,
 	@Embedded
 	var profile: Profile = Profile.createProfile("", ""),
 	@Embedded
@@ -28,19 +24,18 @@ class Member private constructor(
 	var marketingAgree: MarketingAgreement?,
 	@OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
 	val missionRecords: List<MissionRecord> = listOf(),
-) : BaseTimeEntity() {
+) : BaseEntity() {
 	companion object {
 		fun createMember(
-			profile: Profile?,
-			oauthInfo: OauthInfo?,
+			profile: Profile,
+			oauthInfo: OauthInfo,
 			status: MemberStatus?,
 			role: MemberRole?,
 			raisePet: RaisePet?,
 			marketingAgree: MarketingAgreement?,
 		): Member {
 			return Member(
-				id = 0,
-				profile = profile!!,
+				profile = profile,
 				oauthInfo = oauthInfo,
 				status = status,
 				role = role,

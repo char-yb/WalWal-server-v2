@@ -94,7 +94,5 @@ class AuthService(
 		return AuthTokenResponse.of(tokenPair, false)
 	}
 
-	private fun getLoginResponse(member: Member): TokenPairResponse {
-		return jwtTokenService.generateTokenPair(member.id, MemberRole.USER)
-	}
+	private fun getLoginResponse(member: Member): TokenPairResponse = jwtTokenService.generateTokenPair(member.id!!, MemberRole.USER)
 }
