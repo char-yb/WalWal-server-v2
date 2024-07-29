@@ -63,6 +63,7 @@ class WebSecurityConfig(
 					response.status = 401
 				}
 			}
+
 		http.addFilterBefore(
 			jwtAuthenticationFilter(jwtTokenService, cookieUtil),
 			UsernamePasswordAuthenticationFilter::class.java,

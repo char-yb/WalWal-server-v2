@@ -37,6 +37,7 @@ class AuthService(
          */
 		return when (provider) {
 			OAuthProvider.APPLE -> appleClient.authenticateFromApple(token)
+// 			OAuthProvider.KAKAO -> kakaoClient.authenticateFromKakao(token)
 			else -> throw InvalidParameterException()
 		}
 	}

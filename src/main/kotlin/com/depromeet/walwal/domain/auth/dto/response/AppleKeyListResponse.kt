@@ -3,10 +3,10 @@ package com.depromeet.walwal.domain.auth.dto.response
 import java.util.*
 
 data class AppleKeyListResponse(val keys: Array<AppleKeyResponse>) {
-	override fun equals(obj: Any?): Boolean {
+	override fun equals(other: Any?): Boolean {
 		return (
-			obj is AppleKeyListResponse &&
-				obj.keys.contentEquals(keys)
+			other is AppleKeyListResponse &&
+				other.keys.contentEquals(keys)
 		)
 	}
 
