@@ -34,7 +34,6 @@ class WebSecurityConfig(
 	private val cookieUtil: CookieUtil,
 	private val swaggerProperties: SwaggerProperties,
 ) {
-
 	@Bean
 	fun inMemoryUserDetailsManager(): InMemoryUserDetailsManager {
 		val user =
