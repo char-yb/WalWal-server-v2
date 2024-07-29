@@ -3,6 +3,7 @@ package com.depromeet.walwal.global.error
 import com.depromeet.walwal.global.common.response.GlobalResponse
 import com.depromeet.walwal.global.error.exception.CustomException
 import com.depromeet.walwal.global.error.exception.ErrorCode
+import com.depromeet.walwal.global.util.logger
 import jakarta.validation.ConstraintViolation
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpHeaders
@@ -20,6 +21,8 @@ import java.util.function.Consumer
 
 @RestControllerAdvice
 class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
+	val log = logger()
+
 	override fun handleExceptionInternal(
 		ex: Exception,
 		body: Any?,
@@ -42,7 +45,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 		status: HttpStatusCode,
 		request: WebRequest,
 	): ResponseEntity<Any>? {
-//        log.error("MethodArgumentNotValidException : {}", e.message, e)
+		log.error("MethodArgumentNotValidException : {}", e.message, e)
 		val errorMessage: String? = e.bindingResult.allErrors[0].defaultMessage
 		val errorResponse =
 			ErrorResponse.of(e.javaClass.getSimpleName(), errorMessage!!)
@@ -53,7 +56,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 	/** Request Param Validation 예외 처리  */
 	@ExceptionHandler(ConstraintViolationException::class)
 	fun handleConstraintViolationException(e: ConstraintViolationException): ResponseEntity<GlobalResponse> {
-//        log.error("ConstraintViolationException : {}", e.message, e)
+		log.error("ConstraintViolationException : {}", e.message, e)
 
 		val bindingErrors: MutableMap<String?, Any> = HashMap()
 		e.constraintViolations
@@ -85,7 +88,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 	/** PathVariable, RequestParam, RequestHeader, RequestBody 에서 타입이 일치하지 않을 경우 발생  */
 	@ExceptionHandler(MethodArgumentTypeMismatchException::class)
 	protected fun handleMethodArgumentTypeMismatchException(e: MethodArgumentTypeMismatchException): ResponseEntity<GlobalResponse> {
-//        log.error("MethodArgumentTypeMismatchException : {}", e.message, e)
+		log.error("MethodArgumentTypeMismatchException : {}", e.message, e)
 		val errorCode: ErrorCode = ErrorCode.METHOD_ARGUMENT_TYPE_MISMATCH
 		val errorResponse =
 			ErrorResponse.of(e.javaClass.getSimpleName(), errorCode.message)
@@ -101,7 +104,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 		status: HttpStatusCode,
 		request: WebRequest,
 	): ResponseEntity<Any>? {
-//        log.error("HttpRequestMethodNotSupportedException : {}", e.message, e)
+		log.error("HttpRequestMethodNotSupportedException : {}", e.message, e)
 		val errorCode: ErrorCode = ErrorCode.METHOD_NOT_ALLOWED
 		val errorResponse =
 			ErrorResponse.of(e.javaClass.getSimpleName(), errorCode.message)
@@ -113,7 +116,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 	/** CustomException 예외 처리  */
 	@ExceptionHandler(CustomException::class)
 	fun handleCustomException(e: CustomException): ResponseEntity<GlobalResponse> {
-//        log.error("CustomException : {}", e.getMessage(), e)
+		log.error("CustomException : {}", e.message, e)
 		val errorCode: ErrorCode = e.errorCode
 		val errorResponse =
 			ErrorResponse.of(errorCode.name, errorCode.message)
@@ -125,7 +128,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 	/** 500번대 에러 처리  */
 	@ExceptionHandler(Exception::class)
 	protected fun handleException(e: Exception): ResponseEntity<GlobalResponse> {
-//        log.error("Internal Server Error : {}", e.message, e)
+		log.error("Internal Server Error : {}", e.message, e)
 		val internalServerError: ErrorCode = ErrorCode.INTERNAL_SERVER_ERROR
 		val errorResponse =
 			ErrorResponse.of(e.javaClass.simpleName, internalServerError.message)
