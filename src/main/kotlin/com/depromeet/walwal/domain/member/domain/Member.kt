@@ -15,9 +15,9 @@ class Member private constructor(
 	@Embedded
 	val oauthInfo: OauthInfo?,
 	@Enumerated(EnumType.STRING)
-	val status: MemberStatus?,
+	val status: MemberStatus? = MemberStatus.NORMAL,
 	@Enumerated(EnumType.STRING)
-	val role: MemberRole?,
+	val role: MemberRole? = MemberRole.USER,
 	var lastLoginAt: LocalDateTime?,
 	@Enumerated(EnumType.STRING)
 	var raisePet: RaisePet?,

@@ -23,6 +23,10 @@ class Mission(
 	@Column(name = "mission_id")
 	var id: Long? = null
 
+	constructor() : this(
+		title = "",
+	)
+
 	// Proxy 객체 고려하여 equals Override, https://zins.tistory.com/19
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

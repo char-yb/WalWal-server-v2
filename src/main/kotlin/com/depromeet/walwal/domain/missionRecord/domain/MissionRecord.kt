@@ -8,9 +8,11 @@ import kotlin.reflect.full.isSubclassOf
 
 @Entity
 class MissionRecord private constructor(
-	@Column(name = "image_url") var imageUrl: String = "",
+	@Column(name = "image_url")
+	var imageUrl: String = "",
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status", nullable = false) var status: MissionStatus,
+	@Column(name = "status", nullable = false)
+	var status: MissionStatus,
 	@ManyToOne
 	@JoinColumn(name = "mission_id", nullable = false)
 	val mission: Mission,
@@ -22,6 +24,13 @@ class MissionRecord private constructor(
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "record_id")
 	var id: Long? = null
+
+	constructor() : this(
+		imageUrl = "",
+		status = MissionStatus.NOT_COMPLETED,
+		mission = Mission(),
+		member = Member(),
+	)
 
 	// Proxy 객체 고려하여 equals Override, https://zins.tistory.com/19
 	override fun equals(other: Any?): Boolean {
