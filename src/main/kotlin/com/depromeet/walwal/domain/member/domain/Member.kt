@@ -31,6 +31,18 @@ class Member private constructor(
 	@Column(name = "member_id")
 	var id: Long? = null
 
+	// 기본 생성자
+	constructor() : this(
+		profile = Profile.createProfile("", ""),
+		oauthInfo = null,
+		status = null,
+		role = null,
+		lastLoginAt = null,
+		raisePet = null,
+		marketingAgree = null,
+		missionRecords = listOf(),
+	)
+
 	// Proxy 객체 고려하여 equals Override, https://zins.tistory.com/19
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true

@@ -25,7 +25,6 @@ import org.bouncycastle.asn1.pkcs.PrivateKeyInfo
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
 import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
@@ -45,6 +44,10 @@ class AppleClient(
 	private val restClient: RestClient,
 	private val appleProperties: AppleProperties,
 ) {
+	companion object {
+		private const val APPLE_TOKEN_EXPIRE_MINUTES = 5
+	}
+
 	// apple server에서 받아온 id_token
 	private fun getAppleToken(appleTokenRequest: AppleTokenRequest): AppleTokenResponse {
 		// Prepare form data
@@ -54,21 +57,20 @@ class AppleClient(
 		formData.add("code", appleTokenRequest.code)
 		formData.add("grant_type", appleTokenRequest.grantType)
 
-		return restClient
-			.post()
-			.uri(APPLE_TOKEN_URL)
-			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-			.body(formData)
-			.exchange<AppleTokenResponse> { _, response ->
-				if (!response.statusCode.is2xxSuccessful) {
-					throw CustomException(
-						ErrorCode.APPLE_TOKEN_CLIENT_FAILED,
-					)
-				}
-				Objects.requireNonNull(
-					response.bodyTo(AppleTokenResponse::class.java),
-				)!!
-			}
+		val responseEntity =
+			restClient
+				.post()
+				.uri(APPLE_TOKEN_URL)
+				.header(HttpHeaders.CONTENT_TYPE, APPLICATION_URLENCODED)
+				.body(formData)
+				.retrieve()
+				.toEntity(AppleTokenResponse::class.java)
+
+		if (!responseEntity.statusCode.is2xxSuccessful) {
+			throw CustomException(ErrorCode.APPLE_TOKEN_CLIENT_FAILED)
+		}
+
+		return responseEntity.body ?: throw CustomException(ErrorCode.APPLE_TOKEN_CLIENT_FAILED)
 	}
 
 	private fun generateAppleClientSecret(): String {
@@ -79,10 +81,11 @@ class AppleClient(
 					.atZone(ZoneId.systemDefault())
 					.toInstant(),
 			)
+
 		return Jwts.builder()
 			.setHeaderParam("kid", appleProperties.keyId)
 			.setHeaderParam("alg", "ES256") // TODO: dev, prod 환경분리 필요
-			.setIssuer(appleProperties.dev.teamId.split("\\.").get(0))
+			.setIssuer(appleProperties.dev.teamId.split('.')[0])
 			.setIssuedAt(Date(System.currentTimeMillis()))
 			.setExpiration(expirationDate)
 			.setAudience(APPLE_ISSUER)
@@ -121,9 +124,10 @@ class AppleClient(
 			)
 		val appleTokenResponse: AppleTokenResponse = getAppleToken(tokenRequest)
 
+		println("appleTokenResponse: $appleTokenResponse")
 		val keys: Array<AppleKeyResponse> = retrieveAppleKeys()
 		try {
-			val tokenParts: List<String> = appleTokenResponse.idToken.split("\\.")
+			val tokenParts: List<String> = appleTokenResponse.idToken.split('.')
 			val headerPart = String(Base64.getDecoder().decode(tokenParts[0]))
 			val headerNode = objectMapper.readTree(headerPart)
 			val kid = headerNode["kid"].asText()
@@ -156,7 +160,7 @@ class AppleClient(
 				.exchange<AppleKeyListResponse> { _, response ->
 					if (!response.statusCode.is2xxSuccessful) {
 						throw CustomException(
-							ErrorCode.APPLE_TOKEN_CLIENT_FAILED,
+							ErrorCode.APPLE_KEY_CLIENT_FAILED,
 						)
 					}
 					Objects.requireNonNull(
@@ -178,9 +182,5 @@ class AppleClient(
 			Jwts.parserBuilder().setSigningKey(keyData).build().parseClaimsJws(accessToken)
 
 		return parsedClaims.body
-	}
-
-	companion object {
-		private const val APPLE_TOKEN_EXPIRE_MINUTES = 5
 	}
 }
