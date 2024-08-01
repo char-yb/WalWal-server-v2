@@ -1,18 +1,19 @@
 package com.depromeet.walwal.domain.common
 
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.MappedSuperclass
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
-import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener::class)
-abstract class BaseEntity(
-	@Column(updatable = false, nullable = false)
+abstract class BaseEntity {
+	@Column(updatable = false)
 	@CreationTimestamp
-	var createdAt: LocalDateTime = LocalDateTime.now(),
-	@Column
+	val createdAt: LocalDateTime? = LocalDateTime.now()
+
 	@UpdateTimestamp
-	var updatedAt: LocalDateTime? = null,
-)
+	@Column
+	var updatedAt: LocalDateTime? = null
+		protected set
+}

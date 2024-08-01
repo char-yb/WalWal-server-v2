@@ -55,14 +55,12 @@ class MissionRecord private constructor(
 			mission: Mission,
 			member: Member,
 		): MissionRecord {
-			with(MissionRecord) {
-				return MissionRecord(
-					imageUrl = imageUrl,
-					status = status,
-					mission = mission,
-					member = member,
-				)
-			}
+			return MissionRecord(
+				imageUrl = imageUrl,
+				status = status,
+				mission = mission,
+				member = member,
+			)
 		}
 	}
 
