@@ -36,9 +36,8 @@ class MemberService(
 		member: Member,
 		request: CreateMemberRequest,
 	): Member {
-		member.updateProfile(Profile.createProfile(request.nickname, request.profileImageUrl))
+		member.updateProfile(Profile.createProfile(request.nickname, member.profile.profileImageUrl))
 		member.updateRaisePet(request.raisePet)
-		member.updateMarketingAgreement(request.marketingAgreement)
 		return member
 	}
 
