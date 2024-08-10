@@ -59,6 +59,9 @@ dependencies {
     // Apple Login
     implementation("org.bouncycastle:bcpkix-jdk18on:1.72")
 
+    // FCM
+    implementation("com.google.firebase:firebase-admin:9.3.0")
+
     // fixture monkey dependencies
     testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.20")
 
