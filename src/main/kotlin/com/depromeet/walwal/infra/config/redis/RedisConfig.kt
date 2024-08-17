@@ -1,4 +1,4 @@
-package com.depromeet.walwal.infra.config
+package com.depromeet.walwal.infra.config.redis
 
 import com.depromeet.walwal.infra.properties.RedisProperties
 import org.springframework.context.annotation.Bean
